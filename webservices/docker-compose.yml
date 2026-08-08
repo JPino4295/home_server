@@ -1,0 +1,14 @@
+services:
+  nginx:
+    image: nginx:1.21.6
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+    restart: unless-stopped
+
+    environment:
+        ALUCARD_IP: ${ALUCARD_IP}
+        TREVOR_IP: ${TREVOR_IP}

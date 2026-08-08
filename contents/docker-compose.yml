@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  homeServer_flexget:
+    image: wiserain/flexget:3.18.39
+    volumes:
+      - ./flexget:/config
+      - ./flexget/custom-cont-init.d:/custom-cont-init.d
+      - ${RAW_CONTENT_URL}:/downloads
+      - ${MOVIES_CONTENT_URL}:/storage/movies
+      - ${SERIES_CONTENT_URL}:/storage/series
+    ports:
+      - 5050:5050
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - FG_WEBUI_PASSWD=${FLEXGET_PASSWORD}
+    restart: unless-stopped
+
+  homeServer_jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid
+      - AUTO_UPDATE=false
+    volumes:
+      - ./jellyfin/config:/config
+      - ./jellyfin/cache:/cache
+      - ${MOVIES_CONTENT_URL}:/movies
+      - ${SERIES_CONTENT_URL}:/series
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - 8096:8096
+    restart: unless-stopped

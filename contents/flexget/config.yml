@@ -1,0 +1,52 @@
+web_server: yes
+
+schedules:
+  - tasks: '*'
+    interval:
+      minutes: 30
+
+tasks:
+  sort_tv:
+    priority: 3
+    no_entries_ok: yes
+    parsing:
+      series: guessit
+    filesystem:
+      path: /downloads/complete
+      regexp: '.*\.(avi|mkv|mp4)$'
+      recursive: yes
+    accept_all: yes
+    thetvdb_lookup: yes
+    require_field: series_name
+    all_series:
+      parse_only: yes
+    exec:
+      auto_escape: yes
+      on_output:
+        for_entries: |
+          if mediainfo "{{ location }}" | grep EAC3; then
+            mkdir -p "/storage/series/{{ tvdb_series_name }}/Season {{ series_season }}" && ffmpeg -hwaccel auto -y -i "{{ location }}" -map 0 -c:s copy -c:v copy -c:a ac3 -b:a 640k "/storage/series/{{ tvdb_series_name }}/Season {{ series_season }}/{{ tvdb_series_name }} - {{ series_id }}{{ location | pathext }}"
+          else
+            mkdir -p "/storage/series/{{ tvdb_series_name }}/Season {{ series_season }}" && cp "{{ location }}" "/storage/series/{{ tvdb_series_name }}/Season {{ series_season }}/{{ tvdb_series_name }} - {{ series_id }}{{ location | pathext }}"
+          fi
+  sort_movies:
+    priority: 3
+    no_entries_ok: yes
+    filesystem:
+      path: /downloads/complete
+      regexp: '.*\.(avi|mkv|mp4)$'
+      recursive: yes
+    accept_all: yes
+    require_field: movie_name
+    tmdb_lookup:
+      language: es
+    exec:
+      auto_escape: yes
+      on_output:
+       for_entries: |
+         if mediainfo "{{ location }}" | grep EAC3; then
+           mkdir -p "/storage/movies/{{ movie_name }} ({{ movie_year }})" && ffmpeg -hwaccel auto -y -i "{{ location }}" -map 0 -c:s copy -c:v copy -c:a ac3 -b:a 640k "/storage/movies/{{ movie_name }} ({{ movie_year }})/{{ movie_name }} ({{ movie_year }}){{ location | pathext }}"
+         else
+           mkdir -p "/storage/movies/{{ movie_name }} ({{ movie_year }})" && cp "{{ location }}" "/storage/movies/{{ movie_name }} ({{ movie_year }})/{{ movie_name }} ({{ movie_year }}){{ location | pathext }}"
+         fi
+ 
