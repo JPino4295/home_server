@@ -9,25 +9,25 @@ map $host $trevor {
 # Alucard
 server {
     listen 80;
-    server_name flexget.jdelpino.es;
+    server_name ${FLEXGET_SUBDOMAIN}.${BASE_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
 server {
     listen        443 ssl;
-    server_name   flexget.jdelpino.es;
+    server_name   ${FLEXGET_SUBDOMAIN}.${BASE_DOMAIN};
 
     # SSL Certificate Paths (e.g., Let's Encrypt / Certbot 
     # paths)
-    ssl_certificate /etc/letsencrypt/jdelpino.es/fullchain2.pem; 
-    ssl_certificate_key /etc/letsencrypt/jdelpino.es/privkey2.pem;
+    ssl_certificate /etc/letsencrypt/${BASE_DOMAIN}/fullchain2.pem; 
+    ssl_certificate_key /etc/letsencrypt/${BASE_DOMAIN}/privkey2.pem;
     # Recommended SSL Security Settings
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5; ssl_prefer_server_ciphers on; 
 
     location / {
-        proxy_pass         http://$alucard:5050;
+        proxy_pass         http://$alucard:${FLEXGET_PORT};
         proxy_redirect     off;
 
         proxy_set_header   Host             $host;
@@ -45,25 +45,25 @@ server {
 
 server {
     listen 80;
-    server_name jelly.jdelpino.es;
+    server_name ${JELLYFIN_SUBDOMAIN}.${BASE_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
 server {
     listen        443 ssl;
-    server_name   jelly.jdelpino.es;
+    server_name   ${JELLYFIN_SUBDOMAIN}.${BASE_DOMAIN};
 
     # SSL Certificate Paths (e.g., Let's Encrypt / Certbot 
     # paths)
-    ssl_certificate /etc/letsencrypt/jdelpino.es/fullchain2.pem; 
-    ssl_certificate_key /etc/letsencrypt/jdelpino.es/privkey2.pem;
+    ssl_certificate /etc/letsencrypt/${BASE_DOMAIN}/fullchain2.pem; 
+    ssl_certificate_key /etc/letsencrypt/${BASE_DOMAIN}/privkey2.pem;
     # Recommended SSL Security Settings
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5; ssl_prefer_server_ciphers on; 
 
     location / {
-        proxy_pass         http://$trevor:8096;
+        proxy_pass         http://$trevor:${JELLYFIN_PORT};
         proxy_redirect     off;
 
         proxy_set_header   Host             $host;
@@ -80,25 +80,25 @@ server {
 
 server {
     listen 80;
-    server_name metube.jdelpino.es;
+    server_name ${METUBE_SUBDOMAIN}.${BASE_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
 server {
     listen        443 ssl;
-    server_name   metube.jdelpino.es;
+    server_name   ${METUBE_SUBDOMAIN}.${BASE_DOMAIN};
 
     # SSL Certificate Paths (e.g., Let's Encrypt / Certbot 
     # paths)
-    ssl_certificate /etc/letsencrypt/jdelpino.es/fullchain2.pem; 
-    ssl_certificate_key /etc/letsencrypt/jdelpino.es/privkey2.pem;
+    ssl_certificate /etc/letsencrypt/${BASE_DOMAIN}/fullchain2.pem; 
+    ssl_certificate_key /etc/letsencrypt/${BASE_DOMAIN}/privkey2.pem;
     # Recommended SSL Security Settings
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5; ssl_prefer_server_ciphers on; 
 
     location / {
-        proxy_pass         http://$trevor:8081;
+        proxy_pass         http://$trevor:${METUBE_PORT};
         proxy_redirect     off;
 
         proxy_set_header   Host             $host;
@@ -115,25 +115,25 @@ server {
 
 server {
     listen 80;
-    server_name recipes.jdelpino.es;
+    server_name ${RECIPES_SUBDOMAIN}.${BASE_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
 server {
     listen        443 ssl;
-    server_name   recipes.jdelpino.es;
+    server_name   ${RECIPES_SUBDOMAIN}.${BASE_DOMAIN};
 
     # SSL Certificate Paths (e.g., Let's Encrypt / Certbot 
     # paths)
-    ssl_certificate /etc/letsencrypt/jdelpino.es/fullchain2.pem; 
-    ssl_certificate_key /etc/letsencrypt/jdelpino.es/privkey2.pem;
+    ssl_certificate /etc/letsencrypt/${BASE_DOMAIN}/fullchain2.pem; 
+    ssl_certificate_key /etc/letsencrypt/${BASE_DOMAIN}/privkey2.pem;
     # Recommended SSL Security Settings
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5; ssl_prefer_server_ciphers on; 
 
     location / {
-        proxy_pass         http://$trevor:3000;
+        proxy_pass         http://$trevor:${RECIPES_PORT};
         proxy_redirect     off;
 
         proxy_set_header   Host             $host;
@@ -154,25 +154,25 @@ server {
 
 server {
     listen 80;
-    server_name proxmox.jdelpino.es;
+    server_name ${PROXMOX_SUBDOMAIN}.${BASE_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
 server {
     listen        443 ssl;
-    server_name   proxmox.jdelpino.es;
+    server_name   ${PROXMOX_SUBDOMAIN}.${BASE_DOMAIN};
 
     # SSL Certificate Paths (e.g., Let's Encrypt / Certbot 
     # paths)
-    ssl_certificate /etc/letsencrypt/jdelpino.es/fullchain2.pem; 
-    ssl_certificate_key /etc/letsencrypt/jdelpino.es/privkey2.pem;
+    ssl_certificate /etc/letsencrypt/${BASE_DOMAIN}/fullchain2.pem; 
+    ssl_certificate_key /etc/letsencrypt/${BASE_DOMAIN}/privkey2.pem;
     # Recommended SSL Security Settings
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5; ssl_prefer_server_ciphers on; 
 
     location / {
-        proxy_pass         https://$trevor:8006;
+        proxy_pass         https://$trevor:${PROXMOX_PORT};
         proxy_redirect     off;
 
         proxy_set_header   Host             $host;
@@ -193,26 +193,26 @@ server {
 
 server {
     listen 80;
-    server_name immich.jdelpino.es;
+    server_name ${IMMICH_SUBDOMAIN}.${BASE_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
 server {
     listen        443 ssl;
-    server_name   immich.jdelpino.es;
+    server_name   ${IMMICH_SUBDOMAIN}.${BASE_DOMAIN};
     client_max_body_size 10G;
 
     # SSL Certificate Paths (e.g., Let's Encrypt / Certbot 
     # paths)
-    ssl_certificate /etc/letsencrypt/jdelpino.es/fullchain2.pem; 
-    ssl_certificate_key /etc/letsencrypt/jdelpino.es/privkey2.pem;
+    ssl_certificate /etc/letsencrypt/${BASE_DOMAIN}/fullchain2.pem; 
+    ssl_certificate_key /etc/letsencrypt/${BASE_DOMAIN}/privkey2.pem;
     # Recommended SSL Security Settings
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5; ssl_prefer_server_ciphers on; 
 
     location / {
-        proxy_pass         http://$trevor:2283;
+        proxy_pass         http://$trevor:${IMMICH_PORT};
         proxy_redirect     off;
 
         proxy_set_header   Host             $host;
@@ -235,25 +235,25 @@ server {
 
 server {
     listen 80;
-    server_name wardrowbe.jdelpino.es;
+    server_name ${WARDROBE_SUBDOMAIN}.${BASE_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
 server {
     listen        443 ssl;
-    server_name   wardrowbe.jdelpino.es;
+    server_name   ${WARDROBE_SUBDOMAIN}.${BASE_DOMAIN};
 
     # SSL Certificate Paths (e.g., Let's Encrypt / Certbot 
     # paths)
-    ssl_certificate /etc/letsencrypt/jdelpino.es/fullchain2.pem; 
-    ssl_certificate_key /etc/letsencrypt/jdelpino.es/privkey2.pem;
+    ssl_certificate /etc/letsencrypt/${BASE_DOMAIN}/fullchain2.pem; 
+    ssl_certificate_key /etc/letsencrypt/${BASE_DOMAIN}/privkey2.pem;
     # Recommended SSL Security Settings
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5; ssl_prefer_server_ciphers on; 
 
     location / {
-        proxy_pass         http://$trevor:3000;
+        proxy_pass         http://$trevor:${WARDROBE_PORT};
         proxy_redirect     off;
 
         proxy_set_header   Host             $host;
@@ -274,25 +274,25 @@ server {
 
 server {
     listen 80;
-    server_name n8n.jdelpino.es;
+    server_name ${N8N_SUBDOMAIN}.${BASE_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
 server {
     listen        443 ssl;
-    server_name   n8n.jdelpino.es;
+    server_name   ${N8N_SUBDOMAIN}.${BASE_DOMAIN};
 
     # SSL Certificate Paths (e.g., Let's Encrypt / Certbot 
     # paths)
-    ssl_certificate /etc/letsencrypt/jdelpino.es/fullchain2.pem; 
-    ssl_certificate_key /etc/letsencrypt/jdelpino.es/privkey2.pem;
+    ssl_certificate /etc/letsencrypt/${BASE_DOMAIN}/fullchain2.pem; 
+    ssl_certificate_key /etc/letsencrypt/${BASE_DOMAIN}/privkey2.pem;
     # Recommended SSL Security Settings
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5; ssl_prefer_server_ciphers on; 
 
     location / {
-        proxy_pass         http://$trevor:5678;
+        proxy_pass         http://$trevor:${N8N_PORT};
         proxy_redirect     off;
 
         proxy_set_header   Host             $host;
@@ -309,25 +309,25 @@ server {
 
 server {
     listen 80;
-    server_name audiobooks.jdelpino.es;
+    server_name ${AUDIOBOOKS_SUBDOMAIN}.${BASE_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
 server {
     listen        443 ssl;
-    server_name   audiobooks.jdelpino.es;
+    server_name   ${AUDIOBOOKS_SUBDOMAIN}.${BASE_DOMAIN};
 
     # SSL Certificate Paths (e.g., Let's Encrypt / Certbot 
     # paths)
-    ssl_certificate /etc/letsencrypt/jdelpino.es/fullchain2.pem; 
-    ssl_certificate_key /etc/letsencrypt/jdelpino.es/privkey2.pem;
+    ssl_certificate /etc/letsencrypt/${BASE_DOMAIN}/fullchain2.pem; 
+    ssl_certificate_key /etc/letsencrypt/${BASE_DOMAIN}/privkey2.pem;
     # Recommended SSL Security Settings
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5; ssl_prefer_server_ciphers on; 
 
     location / {
-        proxy_pass         http://$trevor:4040;
+        proxy_pass         http://$trevor:${AUDIOBOOKS_PORT};
         proxy_redirect     off;
 
         proxy_set_header   Host             $host;
@@ -344,25 +344,25 @@ server {
 
 server {
     listen 80;
-    server_name ha.jdelpino.es;
+    server_name ${HA_SUBDOMAIN}.${BASE_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
 server {
     listen        443 ssl;
-    server_name   ha.jdelpino.es;
+    server_name   ${HA_SUBDOMAIN}.${BASE_DOMAIN};
 
     # SSL Certificate Paths (e.g., Let's Encrypt / Certbot 
     # paths)
-    ssl_certificate /etc/letsencrypt/jdelpino.es/fullchain2.pem; 
-    ssl_certificate_key /etc/letsencrypt/jdelpino.es/privkey2.pem;
+    ssl_certificate /etc/letsencrypt/${BASE_DOMAIN}/fullchain2.pem; 
+    ssl_certificate_key /etc/letsencrypt/${BASE_DOMAIN}/privkey2.pem;
     # Recommended SSL Security Settings
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5; ssl_prefer_server_ciphers on; 
 
     location / {
-        proxy_pass         http://$trevor:8123;
+        proxy_pass         http://$trevor:${HA_PORT};
 
         proxy_set_header   Host             $host;
         proxy_set_header   X-Real-IP        $remote_addr;
@@ -377,18 +377,18 @@ server {
 }
 server {
     listen 80;
-    server_name jdelpino.es  www.jdelpino.es;
+    server_name ${BASE_DOMAIN}  www.${BASE_DOMAIN};
     return 301 https://$host$request_uri;
 }
 
 server {
     listen 443 ssl;
-    server_name jdelpino.es www.jdelpino.es;
+    server_name ${BASE_DOMAIN} www.${BASE_DOMAIN};
 
     # SSL Certificate Paths (e.g., Let's Encrypt / Certbot 
     # paths)
-    ssl_certificate /etc/letsencrypt/jdelpino.es/fullchain2.pem; 
-    ssl_certificate_key /etc/letsencrypt/jdelpino.es/privkey2.pem;
+    ssl_certificate /etc/letsencrypt/${BASE_DOMAIN}/fullchain2.pem; 
+    ssl_certificate_key /etc/letsencrypt/${BASE_DOMAIN}/privkey2.pem;
     # Recommended SSL Security Settings
 
     ssl_protocols TLSv1.2 TLSv1.3;
