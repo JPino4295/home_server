@@ -20,9 +20,18 @@ def is_match_active():
     try:
         response = requests.get(HAYAHORA_API, timeout=10)
         if response.status_code == 200:
-            data = response.json()
-            # If the API flags active blocks, football/ISP censorship is ongoing
-            return data.get("blocked", False) or data.get("estado", "") == "BLOQUEADO"
+            payload = response.json()
+            data_list = payload.get("data", [])
+            
+            for item in data_list:
+                state_changes = item.get("stateChanges", [])
+                if state_changes:
+                    latest_status = state_changes[-1].get("state", False)
+
+                    if latest_status is True:
+                        return True
+                        
+            return False
     except Exception as e:
         print(f"[!] Error checking match status: {e}")
     return False
