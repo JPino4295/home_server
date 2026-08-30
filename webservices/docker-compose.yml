@@ -33,3 +33,17 @@ services:
         N8N_PORT: ${N8N_PORT}
         AUDIOBOOKS_PORT: ${AUDIOBOOKS_PORT}
         HA_PORT: ${HA_PORT}
+
+ cf-laliga-toggle:
+    image: python:3.11-slim
+    container_name: cf_laliga_toggle
+    restart: unless-stopped
+    command: >
+      sh -c "pip install requests && python /app/app.py"
+    volumes:
+      - ./LaLiga-workaround/index.py:/app/app.py
+    environment:
+      - CF_API_TOKEN=<CF_API_TOKEN>
+      - CF_ZONE_ID=<CF_ZONE_ID>
+      - RECORD_NAMES=<DNS SEPARATED BY COMMA>
+      - CHECK_INTERVAL=180
